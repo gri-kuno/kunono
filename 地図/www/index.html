@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <!-- <link rel="stylesheet" href="css/styles.css"> -->
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css' rel='stylesheet' />
+
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:90%; }
+</style>
+    <title>地図をつくろう</title>
+  </head>
+  <body>
+
+    
+    <!-- ここからマーカーを入れる ーーーーーーーー-->
+    <style>
+      .marker {
+      display: block;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      padding: 0;
+      }
+      </style>
+
+<!-- クリック時に座標を取得 -->
+  <div id="target"></div>
+<script>
+          document.getElementById( "target" ).onclick = function( event ) {
+            var x = event.pageX ;	// 水平の位置座標
+            var y = event.pageY ;	// 垂直の位置座標
+          }
+</script>
+
+
+
+<!-- マップの初期位置の設定 -->
+<div id='map'>
+    <script>
+      /* アクセストークンの設定 */
+      mapboxgl.accessToken = 'pk.eyJ1Ijoia3VubzciLCJhIjoiY2tiMXI3YmNjMDNrNjJ4cXBiZ3dobGJkeiJ9.dVO3NI9vrHwRiyMoliv57Q'; 
+      /* 地図を表示 */
+      var map = new mapboxgl.Map({
+          /* 地図を表示させる要素のid */
+          container: 'map',
+          /* 地図styleID。YOLPではLayerSetIdに相当する。*/
+          style: 'mapbox://styles/mapbox/streets-v11',
+          /* 地図の初期緯度経度[lng,lat] */
+          center: [139.767351, 35.693656],
+          /* 地図の初期ズームレベル */
+          zoom: 18
+      });
+
+    </script>
+
+    <!-- マップの座標を読みこむ -->
+         
+<script>
+map.on('mousemove', function(e) {
+document.getElementById('info').innerHTML =
+// e.point is the x, y coordinates of the mousemove event relative
+// to the top-left corner of the map
+JSON.stringify(e.point) +
+'<br />' +
+// e.lngLat is the longitude, latitude geographical position of the event
+JSON.stringify(e.lngLat.wrap());
+});
+
+  
+</script>
+
+</div>
+
+<!-- 
+  <canvas >
+    Canvas not supported.
+  </canvas> -->
+  
+  <!-- <script src="js/main.js"> -->
+    // <div class="my_draggable">ドラッグできるよ</div>
+      </script>
+
+<!-- ここから猫の部分 ーーーーーーーーーーーーーー-->
+<script>
+//   var geojson = {
+//       'type': 'FeatureCollection',
+//       'features': [
+//       {
+//         'type': 'Feature',
+//         'properties': {
+//           'message': 'ｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋｋ',
+//       'iconSize': [60, 60]
+//     },
+//     'geometry': {
+//       'type': 'Point',
+//       'coordinates': [139.765171, 35.693646]
+//     }
+//   },
+//   {
+//     'type': 'Feature',
+//       'properties': {
+//       'message': 'おいしいおいしおいおいおいしし',
+//       'iconSize': [50, 50]
+//     },
+//     'geometry': {
+//       'type': 'Point',
+//       'coordinates': [139.767353, 35.693946]
+//     }
+//   },
+//   {
+//     'type': 'Feature',
+//     'properties': {
+//       'message': 'ｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌｌ',
+//       'iconSize': [40, 40]
+//     },
+//     'geometry': {
+//       'type': 'Point',
+//       'coordinates': [139.76754337, 35.693843]
+//     }
+//   }
+// ]
+// };
+
+// var map = new mapboxgl.Map({
+//   container: 'map',
+//   style: 'mapbox://styles/mapbox/streets-v11',
+//   center: [139.767351, 35.693656],
+//   zoom: 18
+// });
+// ここまで猫の部分ーーーーーーーーーーーーーーーーー
+
+
+// 本社の場所にピンを立てるーーーーーーーーーーーーーー
+var marker = new mapboxgl.Marker()
+  .setLngLat(map.getCenter())
+  .addTo(map);
+
+// グリフィンの位置、ダイアログボックスを表示する
+var markerHeight = 30, markerRadius = 10, linearOffset = 25;
+var popupOffsets = {
+'top': [0, 0],
+'top-left': [0,0],
+'top-right': [0,0],
+'bottom': [0, -markerHeight],
+'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+'left': [markerRadius, (markerHeight - markerRadius) * -1],
+'right': [-markerRadius, (markerHeight - markerRadius) * -1]
+};
+
+var popup = new mapboxgl.Popup({offset: popupOffsets, className: 'my-class'})
+.setLngLat(map.getCenter())
+.setHTML("グリフィン")
+.setMaxWidth("200px")
+.addTo(map);
+
+
+
+       
+      // // add markers to map
+      // geojson.features.forEach(function(marker) {
+      // // create a DOM element for the marker
+      // var el = document.createElement('div');
+      // el.className = 'marker';
+      // el.style.backgroundImage =
+      // 'url(https://placekitten.com/g/' +
+      // marker.properties.iconSize.join('/') +
+      // '/)';
+      // el.style.width = marker.properties.iconSize[0] + 'px';
+      // el.style.height = marker.properties.iconSize[1] + 'px';
+       
+      // el.addEventListener('click', function() {
+      // window.alert(marker.properties.message);
+      // });
+       
+      // // add marker to map
+      // new mapboxgl.Marker(el)
+      // .setLngLat(marker.geometry.coordinates)
+      // .addTo(map);
+      // });
+      </script>
+      
+  </body>
+</html>
