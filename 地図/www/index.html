@@ -8,7 +8,7 @@
 
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css' rel='stylesheet' />
-
+<script src="js/app.js"></script>
 <style>
   body { margin:0; padding:0; }
   #map { position:absolute; top:0; bottom:0; width:90%; }
@@ -163,27 +163,6 @@ var popup = new mapboxgl.Popup({offset: popupOffsets, className: 'my-class'})
 
 
        
-      // // add markers to map
-      // geojson.features.forEach(function(marker) {
-      // // create a DOM element for the marker
-      // var el = document.createElement('div');
-      // el.className = 'marker';
-      // el.style.backgroundImage =
-      // 'url(https://placekitten.com/g/' +
-      // marker.properties.iconSize.join('/') +
-      // '/)';
-      // el.style.width = marker.properties.iconSize[0] + 'px';
-      // el.style.height = marker.properties.iconSize[1] + 'px';
-       
-      // el.addEventListener('click', function() {
-      // window.alert(marker.properties.message);
-      // });
-       
-      // // add marker to map
-      // new mapboxgl.Marker(el)
-      // .setLngLat(marker.geometry.coordinates)
-      // .addTo(map);
-      // });
       </script>
       
   </body>
